@@ -27,14 +27,17 @@ all_deviations= []
 
 IRB_number = "19-257"
 LAST_COLUMN = 6
+DATE_COLUMN = 1
+VISIT_COLUMN = 2
+NAME_COLUMN = 3
 
 for i in range(sheet.nrows):
     MRN = cycle_name = last_name = string_date = ""
     for j in range(sheet.ncols):
         #if the column represents a date, we need to treat it differently
-        if j == 1:
+        if j == DATE_COLUMN:
             #cast the date string into an integer
-            xl_date = int(sheet.cell_value(i,1))
+            xl_date = int(sheet.cell_value(i,DATE_COLUMN))
 
             #convert integer into a datetime object
             datetime_date = xlrd.xldate_as_datetime(xl_date, 0)
@@ -45,11 +48,9 @@ for i in range(sheet.nrows):
             sheet1.write(i, j, string_date)
         else:
             cell_value = sheet.cell_value(i,j)
-            if j == 0:
-                MRN = cell_value
-            if j == 2:
+            if j == VISIT_COLUMN:
                 cycle_name = cell_value
-            if j == 3:
+            if j == NAME_COLUMN:
                 last_name = cell_value
 
             sheet1.write(i,j, cell_value)
@@ -66,12 +67,7 @@ for n in range(number_deviations):
 
 
 
-writing_wb.save('deviations2.xls')
+writing_wb.save('deviations4.xls')
 
 
-
-
-#references:
-##https://www.kite.com/python/answers/how-to-convert-an-excel-date-to-a-string-in-python
-#https://www.geeksforgeeks.org/reading-excel-file-using-python/
 
